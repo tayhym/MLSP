@@ -1,0 +1,41 @@
+% takes gray image, scales it to given scale and 
+% queries for a face in patch of the image
+% gimage: grayscale image 
+% scale: scale to scan at
+% eigenface: normalized face to scan against
+% patch_scores: size(gimage) matrix of patch_scores of patch cornered at
+%               each i, j point
+function [patch_scores] = sliding_window(gimage, scale, eigenface)
+    N = size(eigenface,1);
+    M = size(eigenface,2);
+    X = size(gimage,1);
+    Y = size(gimage,2);
+    
+    % scaled images
+    s_im1 = imresize(gimage,[32,32]);   % scaled to 0.5x
+    s_im2 = imresize(gimage,[48,48]);   % 0.75x 
+    s_im3 = gimage;                     % 1.0x
+    s_im4 = imresize(gimage,[96,96]);   % 1.5x 
+    s_im5 = imresize(gimage,[128,128]); % 2.0x
+    
+    % patch_scores at each of 5 scales
+    ps_1 = zeros(X,Y);
+    ps_2 = zeros(X,Y);
+    ps_3 = zeros(X,Y);
+    ps_4 = zeros(X,Y);
+    ps_5 = zeros(X,Y);
+    
+    for i=1:X-N
+        for j=1:Y-M
+            p_im = gimage(i:i+N-1,j:j+M-1); 
+            %to_test: normalization of patch
+            %p_im = double(histeq(uint8(p_im)));
+            %p_m = patch_means(i,j);
+            %p_im = p_im - p_m;
+
+            %p_s = abs(p_im(:)'*eigenface(:)); 
+          
+            [best_scores, best_locations] = ...
+            add(best_scores,best_locations,p_s,i,j);     
+        end 
+    end

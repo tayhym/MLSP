@@ -1,0 +1,23 @@
+function [out_scores, out_locations] = remove_closest(scores, locations,incoming_score, replacement_score)
+    % create copy 
+    out_scores = scores;
+    out_locations = locations;
+    
+    % find attributes for score to be replaced
+    replacement_score_i = find(scores==replacement_score,1);
+    x_rs = locations(1,replacement_score_i);
+    y_rs = locations(2,replacement_score_i);
+    
+    % find attributes for scor
+    incoming_score_i = find(scores==incoming_score,1);
+    x_in = locations(1,incoming_score_i);
+    y_in = locations(2,incoming_score_i);
+    
+    loc_close = abs(norm([x_rs, y_rs]-[x_in, y_in])<10);
+    
+    score_close = abs(incoming_score-replacement_score)<10;
+    
+    if (loc_close && score_close) 
+        % merge locations, and scores
+        scores(replacement_score_i) = (replacement_score+incoming_score)/2;
+        locations(
