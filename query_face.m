@@ -2,11 +2,8 @@
 % and normalized eigen_face. 
 function [face_score] = query_face(p_im, eigenface)
     %sumE=sum(sum(eigenface(:)));
-
-    % method1: dot product
-    p_im = p_im - mean(p_im(:));
-    p_im = p_im./norm(p_im(:));
     
+    % method1: dot product
     face_score = p_im(:)'*eigenface(:);
     
     % method2: covolution

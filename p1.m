@@ -79,7 +79,7 @@ for i_gimg=3
             p_m = patch_means(i,j);
             p_im = p_im - p_m;
 
-            p_s = abs(p_im(:)'*eigenface(:)); 
+            p_s = p_im(:)'*eigenface(:); 
            
            
             [best_scores, best_locations] = ...
