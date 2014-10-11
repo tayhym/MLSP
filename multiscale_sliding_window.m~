@@ -10,13 +10,13 @@
 function [best_scores, best_locations] = multiscale_sliding_window(gimage,eigenface,num_candidates,threshold)
     
     num_scales = 5;
-    [N_o, M_o] = size(gimage); % original image size
+    x
     % scaled images
-    s_im1 = imresize(gimage,[N_o*0.5,M_o*0.5]);   % scaled to 0.5x
-    s_im2 = imresize(gimage,[N_o*0.75,M_o*0.75]);   % 0.75x 
+    s_im1 = imresize(gimage,[32,32]);   % scaled to 0.5x
+    s_im2 = imresize(gimage,[48,48]);   % 0.75x 
     s_im3 = gimage;                     % 1.0x
-    s_im4 = imresize(gimage,[N_o*1.5,M_o*1.5]);   % 1.5x 
-    s_im5 = imresize(gimage,[N_o*2.0,M_o*2.0]); % 2.0x
+    s_im4 = imresize(gimage,[96,96]);   % 1.5x 
+    s_im5 = imresize(gimage,[128,128]); % 2.0x
     
     s_im_all = cell(1,5); % 1 by 5 cell array
     s_im_all{1} = s_im1;
@@ -45,7 +45,7 @@ function [best_scores, best_locations] = multiscale_sliding_window(gimage,eigenf
     
     % compute best scores at each location and threshold them
     % for multiple-scales: compute new patch means
-    for i=1:num_scales
+    for i=1:2
         bl_x = 2*(i-1)+1; % x and y indices location for best_locations 
         bl_y = 2*i; 
         
