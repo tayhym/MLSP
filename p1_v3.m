@@ -61,4 +61,20 @@ figure(18); imagesc(f_p5);
 
 
 %% 
- 
+stats1 = regionprops(f_p,'area','centroid','boundingbox');
+centroids = reshape([stats1.Centroid],[numel([stats1.Centroid])/2,2]);
+area = reshape([stats1.Area],[numel([stats1.Area]),1]);
+% face_locations = stats1(:).Centroid > mean(stats1(:).Centroid);
+thres = (1/3)*median(area);
+idx = area>thres;
+faces_loc = round(centroids(idx,:));
+faces_loc = faces_loc/0.5; % scale back to original space
+
+stats2 = regionprops(f_p2,'area','centroid','boundingbox');
+stats3 = regionprops(f_p3,'area','centroid','boundingbox');
+stats4 = regionprops(f_p4,'area','centroid','boundingbox');
+stats5 = regionprops(f_p5,'area','centroid','boundingbox');
+
+
+
+
