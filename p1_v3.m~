@@ -61,22 +61,65 @@ figure(18); imagesc(f_p5);
 
 
 %% 
-rectangles_attr = size(eigenface);
-shapeInserter = vision.shapeInserter;
+rect_attr = size(eigenface);
+% shapeInserter = vision.shapeInserter;
 stats1 = regionprops(f_p,'area','centroid','boundingbox');
 scale1 = 0.5;
-face_loc1 = getFaceLocations(stats1,scale1);
-figure(19);
-
+face_loc1 = getFaceLocations(stats1,scale1)
+num_faces = size(face_loc1,1);
+rect_loc1 = [face_loc1,repmat(rect_attr,[num_faces,1])]; 
+gimage_disp1 = gimage;
+figure(24); 
+imagesc(gimage_disp1);
+hold on;
 for i=1:size(face_loc1,1)
-    
-    
+%     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
+    rect = rectangle('position', rect_loc1(i,:));
+end
 
+%%
 stats2 = regionprops(f_p2,'area','centroid','boundingbox');
+scale2 = 0.75;
+face_loc2 = getFaceLocations(stats2,scale2);
+num_faces = size(face_loc2,1);
+rect_loc2 = [face_loc2,repmat(rect_attr,[num_faces,1])]; 
+
+for i=1:size(face_loc2,1)
+%     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
+    rect = rectangle('position', rect_loc2(i,:));
+end
+
 stats3 = regionprops(f_p3,'area','centroid','boundingbox');
+scale3 = 1.0;
+face_loc3 = getFaceLocations(stats3,scale3);
+num_faces = size(face_loc3,1);
+rect_loc3 = [face_loc3,repmat(rect_attr,[num_faces,1])]; 
+
+for i=1:size(face_loc3,1)
+    rect = rectangle('position', rect_loc3(i,:));
+end
+
 stats4 = regionprops(f_p4,'area','centroid','boundingbox');
+scale4 = 1.5;
+face_loc4 = getFaceLocations(stats4,scale4);
+num_faces = size(face_loc4,1);
+rect_loc4 = [face_loc4,repmat(rect_attr,[num_faces,1])]; 
+
+for i=1:size(face_loc4,1)
+    rect = rectangle('position', rect_loc4(i,:));
+end
+
 stats5 = regionprops(f_p5,'area','centroid','boundingbox');
+scale5 = 2.0;
+face_loc5 = getFaceLocations(stats5,scale5);
+num_faces = size(face_loc5,1);
+rect_loc5 = [face_loc5,repmat(rect_attr,[num_faces,1])]; 
 
+for i=1:size(face_loc5,1)
+    rect = rectangle('position', rect_loc5(i,:));
+end
+hold off;
+%%
 
-
-
+all_rects = [face_loc1;face_loc2;face_loc3;face_loc4;face_loc5];
+face_loc_combined = combine_faces(al

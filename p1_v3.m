@@ -69,8 +69,9 @@ face_loc1 = getFaceLocations(stats1,scale1)
 num_faces = size(face_loc1,1);
 rect_loc1 = [face_loc1,repmat(rect_attr,[num_faces,1])]; 
 gimage_disp1 = gimage;
-figure(20); hold on;
-imagesc(gimage);
+figure(24); 
+imagesc(gimage_disp1);
+hold on;
 for i=1:size(face_loc1,1)
 %     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
     rect = rectangle('position', rect_loc1(i,:));
@@ -82,9 +83,7 @@ scale2 = 0.75;
 face_loc2 = getFaceLocations(stats2,scale2);
 num_faces = size(face_loc2,1);
 rect_loc2 = [face_loc2,repmat(rect_attr,[num_faces,1])]; 
-gimage_disp2 = gimage;
-figure(22); hold on;
-imagesc(gimage);
+
 for i=1:size(face_loc2,1)
 %     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
     rect = rectangle('position', rect_loc2(i,:));
@@ -95,7 +94,7 @@ scale3 = 1.0;
 face_loc3 = getFaceLocations(stats3,scale3);
 num_faces = size(face_loc3,1);
 rect_loc3 = [face_loc3,repmat(rect_attr,[num_faces,1])]; 
-gimage_disp3 = gimage;
+
 for i=1:size(face_loc3,1)
     rect = rectangle('position', rect_loc3(i,:));
 end
@@ -119,5 +118,18 @@ rect_loc5 = [face_loc5,repmat(rect_attr,[num_faces,1])];
 for i=1:size(face_loc5,1)
     rect = rectangle('position', rect_loc5(i,:));
 end
+hold off;
+%%
 
+all_rects = [face_loc1;face_loc2;face_loc3;face_loc4;face_loc5];
+face_loc_combined = combine_faces(all_rects);
+num_faces = size(face_loc_combined,1);
+rect_loc_combined = [face_loc_combined,repmat(rect_attr,[num_faces,1])]; 
+figure(25); 
+imagesc(gimage);
+hold on;
+for i=1:size(face_loc_combined,1)
+    rect = rectangle('position', rect_loc_combined(i,:));
+end
+hold off;
 
