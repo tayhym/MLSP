@@ -17,6 +17,9 @@ eigenface = getEigenface();
 
 % test for eigenface on group pictures
 i_gimg=3;
+i_gimg=4;
+i_gimg=5;
+
 groupimages = dir('group_photos');
 colorimg = imread(strcat('group_photos/',groupimages(i_gimg).name));
 gimage = squeeze(mean(colorimg,3)); % mean along r,g,b channels
@@ -132,4 +135,5 @@ for i=1:size(face_loc_combined,1)
     rect = rectangle('position', rect_loc_combined(i,:));
 end
 hold off;
+
 
