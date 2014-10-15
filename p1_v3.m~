@@ -1,0 +1,34 @@
+% p1_v3 
+% changelog: max method
+clear all; close all;
+%%%%%%%%%%%
+% options (variable) 
+normalizeTrainingFaces = 1;     % getEigenFace()
+normalizeEigenface = 0;         % getEigenFace()
+meanSubtractPatches = 1;        % sliding_window2()
+varianceNormalizePatches = 0;   % sliding_window2()
+normalizedDotProduct = 0;       % queryFace()
+dotProduct = 1;                 % queryFace()
+%%%%%%%%%%%
+
+% Pipeline1: Get eigenface and images
+% get eigenface
+eigenface = getEigenface();
+
+% test for eigenface on group pictures
+i_gimg=3;
+groupimages = dir('group_photos');
+colorimg = imread(strcat('group_photos/',groupimages(i_gimg).name));
+gimage = squeeze(mean(colorimg,3)); % mean along r,g,b channels
+figure(1); imagesc(gimage); 
+patch_sums = computeAllPatchSums(gimage,size(eigenface));
+
+%% 
+patch_scores = sliding_window2(gimage, eigenface, patch_sums);
+    
+figure(8); imagesc(patch_scores); colorbar;
+
+%% 
+compute on 
+    
+    

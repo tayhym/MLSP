@@ -15,6 +15,8 @@ function [eigenface] = getEigenface()
         % double is for computation 
         % uint8 is 0-255
         image = double(imread(strcat('lfw1000/',name)));
+        image = image - mean(image(:));
+        image = image/norm(image(:));
         images(:,i) = image(:);
     end
     %% compute eigenvectors, sqrt eigenvalues == sv for sym, square, positive def
@@ -23,8 +25,8 @@ function [eigenface] = getEigenface()
 
     eigenface=reshape(U(:),nrows,ncols);
     figure; imshow(eigenface,[min(eigenface(:)) max(eigenface(:))]); title('before normalization');
-    eigenface = eigenface - mean(eigenface(:));
-    eigenface = eigenface./norm(eigenface(:));
+%     eigenface = eigenface - mean(eigenface(:));
+%     eigenface = eigenface./norm(eigenface(:));
     figure; imshow(eigenface,[min(eigenface(:)) max(eigenface(:))]); title('after normalization');
 end
 
