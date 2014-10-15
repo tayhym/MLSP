@@ -61,15 +61,16 @@ figure(18); imagesc(f_p5);
 
 
 %% 
+rectangles_attr = size(eigenface);
+shapeInserter = vision.shapeInserter;
 stats1 = regionprops(f_p,'area','centroid','boundingbox');
-centroids = reshape([stats1.Centroid],[numel([stats1.Centroid])/2,2]);
-area = reshape([stats1.Area],[numel([stats1.Area]),1]);
-% face_locations = stats1(:).Centroid > mean(stats1(:).Centroid);
-thres = (1/3)*median(area);
-idx = area>thres;
-faces_loc = centroids(idx)
+scale1 = 0.5;
+face_loc1 = getFaceLocations(stats1,scale1);
+figure(19);
 
-
+for i=1:size(face_loc1,1)
+    
+    
 
 stats2 = regionprops(f_p2,'area','centroid','boundingbox');
 stats3 = regionprops(f_p3,'area','centroid','boundingbox');

@@ -61,20 +61,63 @@ figure(18); imagesc(f_p5);
 
 
 %% 
+rect_attr = size(eigenface);
+% shapeInserter = vision.shapeInserter;
 stats1 = regionprops(f_p,'area','centroid','boundingbox');
-centroids = reshape([stats1.Centroid],[numel([stats1.Centroid])/2,2]);
-area = reshape([stats1.Area],[numel([stats1.Area]),1]);
-% face_locations = stats1(:).Centroid > mean(stats1(:).Centroid);
-thres = (1/3)*median(area);
-idx = area>thres;
-faces_loc = round(centroids(idx,:));
-faces_loc = faces_loc/0.5; % scale back to original space
+scale1 = 0.5;
+face_loc1 = getFaceLocations(stats1,scale1)
+num_faces = size(face_loc1,1);
+rect_loc1 = [face_loc1,repmat(rect_attr,[num_faces,1])]; 
+gimage_disp1 = gimage;
+figure(20); hold on;
+imagesc(gimage);
+for i=1:size(face_loc1,1)
+%     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
+    rect = rectangle('position', rect_loc1(i,:));
+end
 
+%%
 stats2 = regionprops(f_p2,'area','centroid','boundingbox');
+scale2 = 0.75;
+face_loc2 = getFaceLocations(stats2,scale2);
+num_faces = size(face_loc2,1);
+rect_loc2 = [face_loc2,repmat(rect_attr,[num_faces,1])]; 
+gimage_disp2 = gimage;
+figure(22); hold on;
+imagesc(gimage);
+for i=1:size(face_loc2,1)
+%     gimage_disp1 = step(shapeInserter, gimage_disp1,[face_loc,repmat(rect_attr,[num_faces,1])]);
+    rect = rectangle('position', rect_loc2(i,:));
+end
+
 stats3 = regionprops(f_p3,'area','centroid','boundingbox');
+scale3 = 1.0;
+face_loc3 = getFaceLocations(stats3,scale3);
+num_faces = size(face_loc3,1);
+rect_loc3 = [face_loc3,repmat(rect_attr,[num_faces,1])]; 
+gimage_disp3 = gimage;
+for i=1:size(face_loc3,1)
+    rect = rectangle('position', rect_loc3(i,:));
+end
+
 stats4 = regionprops(f_p4,'area','centroid','boundingbox');
+scale4 = 1.5;
+face_loc4 = getFaceLocations(stats4,scale4);
+num_faces = size(face_loc4,1);
+rect_loc4 = [face_loc4,repmat(rect_attr,[num_faces,1])]; 
+
+for i=1:size(face_loc4,1)
+    rect = rectangle('position', rect_loc4(i,:));
+end
+
 stats5 = regionprops(f_p5,'area','centroid','boundingbox');
+scale5 = 2.0;
+face_loc5 = getFaceLocations(stats5,scale5);
+num_faces = size(face_loc5,1);
+rect_loc5 = [face_loc5,repmat(rect_attr,[num_faces,1])]; 
 
-
+for i=1:size(face_loc5,1)
+    rect = rectangle('position', rect_loc5(i,:));
+end
 
 
