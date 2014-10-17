@@ -5,7 +5,7 @@
 function [alpha_t, best_stumps] = adaboost_train(Xtrain, Ytrain)
     fprintf('training adaboost...');
     N = size(Xtrain,1);
-    T = 10; 
+    T = 5; 
     
     alpha_t = zeros(T,1);
     best_stumps = cell(T,1);
@@ -18,6 +18,7 @@ function [alpha_t, best_stumps] = adaboost_train(Xtrain, Ytrain)
         err_t = best_stump.err;
         err_t = max(1e-30, err_t); % avoid NaNs by div by 0
         alpha_t(t) = 0.5*log((1-err_t)/err_t);
+        D_multiplier = exp(-alpha_t(t)*Ytrain.*ypred);
         D_t = D_t.*exp(-alpha_t(t)*Ytrain.*ypred);
         D_t = D_t/sum(D_t(:));
     end 

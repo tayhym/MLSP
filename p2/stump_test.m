@@ -3,9 +3,11 @@
 function [ypred] = stump_test(stump_attr,Xtest)
     decision_column = Xtest(:,stump_attr.column);
     if (stump_attr.direction == 1)
-        ypred = decision_column >= stump_attr.thres;
+        ypred = double(decision_column >= stump_attr.thres);
+        ypred(ypred==0) = -1;
     else 
-        ypred = decision_column <= stump_attr.thres;
+        ypred = double(decision_column <= stump_attr.thres);
+        ypred(ypred==0) = -1;
     end 
 end
 

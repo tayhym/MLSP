@@ -38,11 +38,13 @@ function [best_stump, ypred] = stump_train(Xtrain,Ytrain,D_t)
             if (err_geq<=err_leq)
                 stump_candidate_err = err_geq;
                 stump_candidate_dir = 1;
-                stump_candidate_pred = stump_unsorted>=threshold;
+                stump_candidate_pred = double(stump_unsorted>=threshold);
+                stump_candidate_pred(stump_candidate_pred==0) = -1;
             else 
                 stump_candidate_err = err_leq;
                 stump_candidate_dir = -1;
-                stump_candidate_pred = stump_unsorted<=threshold;
+                stump_candidate_pred = double(stump_unsorted<=threshold);
+                stump_candidate_pred(stump_candidate_pred==0) = -1;
             end 
             
             if ((best_column == -1) ||              ...

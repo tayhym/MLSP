@@ -14,6 +14,8 @@ function [ypred] = adaboost_test(best_stumps, alpha_t, Xtest)
         ypred = ypred + alpha_t(t)*stump_test(best_stumps{t},Xtest);
     end 
     ypred = sign(ypred);
+%     ypred_indx = ypred==0;
+%     ypred(ypred_indx) = 1;
 %     ypred(ypred<0) = -1;
 end 
 
