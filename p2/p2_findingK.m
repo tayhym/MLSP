@@ -1,6 +1,10 @@
+% finding optimal K value
 clear all; close all;
+
+results = zeros(2,8); % 1st row is train acc, 2nd row is test acc
+for K=2:16
 %---------boosting based face detector---------%
-[eigenfaces,weights_F, weights_NF] = getEigenfaces();   % column vectors of eigenfaces
+[eigenfaces,weights_F, weights_NF] = getEigenfaces(K);   % column vectors of eigenfaces
          
 
 Xtrain = [weights_F';weights_NF'];
@@ -12,6 +16,7 @@ Ytrain = [1*ones(size(weights_F',1),1);-1*ones(size(weights_NF',1),1)];
 [ypred] = adaboost_test(best_stumps,alpha_t,Xtrain);
 
 accuracy = mean(ypred==Ytrain);
+results(1,K) = accuracy;
 
 %% combined testData for faces and non-faces 
 
@@ -23,18 +28,5 @@ Ytest = [1*ones(size(Weights_F_test',1),1);-1*ones(size(Weights_NF_test',1),1)];
 [ypred_test] = adaboost_test(best_stumps, alpha_t, Xtest);
 
 test_accuracy = mean(Ytest==ypred_test);
-
-%% test data for faces and non-faces separately
-X_test_faces = Weights_F_test';
-Y_test_faces = ones(size(Weights_F_test',1),1);
-
-X_test_nonFaces = Weights_NF_test';
-Y_test_nonFaces = -1*ones(size(Weights_NF_test',1),1);
-
-y_pred_faces = adaboost_test(best_stumps,X_test_faces);
-acc_test_faces = mean(y_pred_faces==Y_test_faces);
-y_pred_nonFaces = adaboost_test( 
-
-
-
-
+results(2,K/2) = test_accuracy;
+end 
