@@ -17,8 +17,9 @@ eigenface = getEigenface();
 
 % test for eigenface on group pictures
 i_gimg=3;
-i_gimg=4;
-i_gimg=5;
+% i_gimg=4;
+% i_gimg=5;
+% i_gimg=6;
 
 groupimages = dir('group_photos');
 colorimg = imread(strcat('group_photos/',groupimages(i_gimg).name));

@@ -1,0 +1,5 @@
+% ypred: output classes using models 
+% models: cell array 1 by T of structs for the models
+% alpha_t: 1 by T array of the weights per model
+function [ypred] = adaboost_test(models, alpha Xtest)
+    
