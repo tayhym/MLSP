@@ -5,7 +5,7 @@
 function [alpha_t, best_stumps] = adaboost_train(Xtrain, Ytrain)
     fprintf('training adaboost...');
     N = size(Xtrain,1);
-    T = 5; 
+    T = 10; 
     
     alpha_t = zeros(T,1);
     best_stumps = cell(T,1);
