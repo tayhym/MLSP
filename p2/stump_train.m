@@ -44,17 +44,14 @@ function [best_stump] = stump_train(Xtrain,Ytrain,D_t)
                (best_err > stump_candidate_err))
                 best_column = k;
                 best_thres = threshold;
-                best_dir = stump_candidate_dir;
+                best_direc = stump_candidate_dir;
                 best_err = stump_candidate_err;
             end         
         end
-    end 
-    
-   best_stump = struct('column',-1,'thres',-1,'direction',-1,'err',-1);
-
+    end    
     best_stump.column = best_column;
     best_stump.thres = best_thres;
-    best_stump.dir = best_dir;
+    best_stump.direction = best_direc;
     best_stump.err = best_err;
     end
     
