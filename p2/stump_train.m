@@ -4,7 +4,8 @@
 %           : best_stump.direction - +ve 1 for >= == face
 %           :                        -ve 1 for <= == face
 % D_t       : m by 1 weights for each instance (how heavy to count in error)
-function [best_stump] = stump_train(Xtrain,Ytrain,D_t)
+% ypred     : m by 1 predictions used to update the weight for this stump (based on accuracy)
+function [best_stump, ypred] = stump_train(Xtrain,Ytrain,D_t)
     
     m = size(Xtrain,1);
     K = size(Xtrain,2);
@@ -17,27 +18,31 @@ function [best_stump] = stump_train(Xtrain,Ytrain,D_t)
     
     for k=1:K
         stump = Xtrain(:,k);
+        stump_unsorted = stump;
         [stump,idx] = sort(stump);
         stump_ytrain = Ytrain(idx);
+        D_t_corres = D_t(idx);
         
-        for thres_idx=1:m
-            threshold = stump(thres_idx);
+        for thres_idx=1:m-1
+            threshold = (stump(thres_idx)+stump(thres_idx+1))/2;
             pred_geq = (stump>=threshold);
             pred_geq(pred_geq==0) = -1;
-            err_geq = sum(D_t(pred_geq~=stump_ytrain));
+            err_geq = sum(D_t_corres(pred_geq~=stump_ytrain));
             assert(numel(err_geq)==1);
             
             pred_leq = (stump<=threshold);
             pred_leq(pred_leq==0) = -1;
-            err_leq = sum(D_t(pred_leq~=stump_ytrain));
+            err_leq = sum(D_t_corres(pred_leq~=stump_ytrain));
             assert(numel(err_leq)==1);
                      
             if (err_geq<=err_leq)
                 stump_candidate_err = err_geq;
                 stump_candidate_dir = 1;
+                stump_candidate_pred = stump_unsorted>=threshold;
             else 
                 stump_candidate_err = err_leq;
                 stump_candidate_dir = -1;
+                stump_candidate_pred = stump_unsorted<=threshold;
             end 
             
             if ((best_column == -1) ||              ...
@@ -46,6 +51,7 @@ function [best_stump] = stump_train(Xtrain,Ytrain,D_t)
                 best_thres = threshold;
                 best_direc = stump_candidate_dir;
                 best_err = stump_candidate_err;
+                ypred = stump_candidate_pred;
             end         
         end
     end    

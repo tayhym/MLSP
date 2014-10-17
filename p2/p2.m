@@ -7,8 +7,8 @@ Xtrain = [weights_F';weights_NF'];
 Ytrain = [1*ones(size(weights_F',1),1);-1*ones(size(weights_NF',1),1)];
 %%
     
-[alpha_t,models] = adaboost_train(Xtrain, Ytrain);
+[alpha_t,best_stumps] = adaboost_train(Xtrain, Ytrain);
 %%
-[ypred] = adaboost_test(models,alpha_t,Xtrain);
+[ypred] = adaboost_test(best_stumps,alpha_t,Xtrain);
 
 accuracy = mean(ypred==Ytrain);
