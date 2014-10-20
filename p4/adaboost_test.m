@@ -1,0 +1,23 @@
+% ypred      : m by 1 output classes using weighted models 
+% best_stumps: cell array structs containing info for the best stump 
+%            : for the t-th weighted iteration 
+% alpha_t    : T by 1 array of the weights per model
+function [ypred] = adaboost_test(best_stumps, alpha_t, Xtest,thres)
+    m = size(Xtest,1);
+    T = size(alpha_t,1); 
+    
+    ypred = ones(m,1);
+   
+    for t=1:T 
+        ypred = ypred + alpha_t(t)*stump_test(best_stumps{t},Xtest);
+    end 
+%     ypred = sign(ypred);
+    %ypred_idx = ypred>=thres;
+    %ypred(ypred_idx) = ypred;
+    %ypred(ypred<thres) = -1;
+%     ypred_indx = ypred==0;
+%     ypred(ypred_indx) = 1;
+%     ypred(ypred<0) = -1;
+end 
+
+    

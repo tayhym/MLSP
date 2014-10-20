@@ -1,0 +1,28 @@
+% weights_F: column vectors of weights, 1 per face image
+% weights_NF: column vectors of weights, 1 per non-face image
+% alpha_t: weights for respective models
+% models: cell array containing structs for each model
+function [alpha_t, models] = train_adaboost(Xtrain, Ytrain)
+    fprintf('training adaboost...')
+    N = size(Xtrain,1);
+    T = 500; 
+    
+    alpha_t = zeros(1,size(Xtrain,1));
+    models = cell(1,T);
+    
+    D_t = ones(N,1)*1/N;
+    for t=1:T
+%         model = svmtrain(Xtrain,Ytrain,'kernel_function','linear');
+%         Ypred = svmclassify(model,Xtrain);
+        model = nb_train(Xtrain, Ytrain,D_t);
+        models{t} = model;
+        err_t = sum(D_t.*(0.5*(1-(Ytrain.*Ypred))));
+        assert(numel(err_t)==1);
+        alpha_t(t) = 0.5*ln((1-err_t)/err_t);
+        D_t = exp(-alpha_t(t)*Ytrain.*Ypred);
+    end 
+    
+        
+    
+    
+    
