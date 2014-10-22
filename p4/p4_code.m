@@ -14,9 +14,9 @@ dotProduct = 1;                 % queryFace()
 
 % test for eigenface on group pictures
 i_gimg=3;
-% i_gimg=4;
-% i_gimg=5;
-
+i_gimg=4;
+i_gimg=5;
+% i_gimg=6;
 groupimages = dir('group_photos');
 colorimg = imread(strcat('group_photos/',groupimages(i_gimg).name));
 gimage = squeeze(mean(colorimg,3)); % mean along r,g,b channels
@@ -45,7 +45,7 @@ patch_scores2 = adaboost_find_faces(best_stumps,alpha_t,eigenfaces,s_im2);
 
 rescaled_dimensions3 = [round(N*19/64), round(M*19/64)];
 s_im3 = imresize(gimage, rescaled_dimensions3);                     % 1.0x
-patch_scores3 = adaboost_find_faces(best_stumps,alpha_t,eigenfaces,gimage);
+patch_scores3 = adaboost_find_faces(best_stumps,alpha_t,eigenfaces,s_im3);
 
 rescaled_dimension4 = [round(N*1.5*19/64), round(M*1.5*19/64)];
 s_im4 = imresize(gimage,rescaled_dimension4);   % 1.5x
@@ -66,8 +66,8 @@ a3 = patch_scores3>=0.8*max(max(patch_scores3));
 figure(5); imagesc(a1);
 figure(6);imagesc(a2);
 figure(7); imagesc(a3);
-% figure(8); imagesc(a4);
-% figure(9); imagesc(a5);
+figure(8); imagesc(a4);
+figure(9); imagesc(a5);
 %% 
 % shapeInserter = vision.shapeInserter;
 stats1 = regionprops(a1,'area','centroid','boundingbox');
@@ -111,24 +111,24 @@ for i=1:size(face_loc3,1)
 end
 
 
-% stats4 = regionprops(a4,'area','centroid','boundingbox');
-% scale4 = 1.5*19/64;
-% 
+stats4 = regionprops(a4,'area','centroid','boundingbox');
+scale4 = 1.5*19/64;
+ 
 % face_loc4 = getFaceLocations(stats4,scale4);
 % num_faces = size(face_loc4,1);
 % rect_loc4 = [face_loc4,repmat(rect_attr,[num_faces,1])]; 
-% 
+%  
 % for i=1:size(face_loc4,1)
-%     rect = rectangle('position', rect_loc4(i,:));
+%      rect = rectangle('position', rect_loc4(i,:));
 % end
-% 
-% stats5 = regionprops(a5,'area','centroid','boundingbox');
-% scale5 = 2.0*19/64;
-% 
+ 
+stats5 = regionprops(a5,'area','centroid','boundingbox');
+scale5 = 2.0*19/64;
+ 
 % face_loc5 = getFaceLocations(stats5,scale5);
 % num_faces = size(face_loc5,1);
 % rect_loc5 = [face_loc5,repmat(rect_attr,[num_faces,1])]; 
-% 
+%  
 % for i=1:size(face_loc5,1)
 %     rect = rectangle('position', rect_loc5(i,:));
 % end
